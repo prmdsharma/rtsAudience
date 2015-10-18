@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="trace" strict="true" name="XMLConfigTest"
+	packages="">
+	<Properties>
+		<Property name="log-path">/opendmp/logs</Property>
+	</Properties>
+	<Appenders>
+		<RollingFile name="odcapLogger" fileName="${log-path}/rtsAudience.log"
+			filePattern="${log-path}/rtsAudience.log-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>%d{ABSOLUTE} %5p %c{1}:%L - %m%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+				<SizeBasedTriggeringPolicy size="256 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="20" />
+		</RollingFile>
+		<!-- <Console name="Console" target="SYSTEM_OUT"> <PatternLayout pattern="%d{HH:mm:ss.SSS} 
+			[%t] %-5level %logger{36} - %msg%n" /> </Console> -->
+	</Appenders>
+	<Loggers>
+		<AsyncLogger name="com.opendmp"
+			includeLocation="true" additivity="false" level="debug">
+			<AppenderRef ref="odcapLogger" />
+			<!-- <AppenderRef ref="Console" /> -->
+		</AsyncLogger>
+
+		<AsyncRoot includeLocation="true" additivity="false" level="info">
+			<AppenderRef ref="odcapLogger" />
+			<!-- <AppenderRef ref="Console" /> -->
+		</AsyncRoot>
+	</Loggers>
+</Configuration>
